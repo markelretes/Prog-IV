@@ -6,7 +6,7 @@
 
 void clearIfNeeded(char *str, int max_line)
 {
-	// Limpia los caracteres de más introducidos
+	// Limpia los caracteres de mÃ¡s introducidos
 	if ((strlen(str) == max_line-1) && (str[max_line-2] != '\n'))
 		while (getchar() != '\n');
 }
@@ -76,21 +76,8 @@ void registroUsuario(Usuario** usuarios, int numUsuarios)
     fgets(strPass, MAX_LINE, stdin);
     clearIfNeeded(strPass, MAX_LINE);
 
-    // Creo el administrador
-    Usuario u = {strUser, strPass, 0.0, 0, 0, true};
 
-    // Modificar el array de usuarios (reservar memoria para un usuario mas)
-    Usuario* copia;
-    copia = (Usuario*)malloc(sizeof(Usuario)*numUsuarios); // Creo una copia del array antes de reservar memoria
-    copia = *usuarios;
-
-    *usuarios = (Usuario*)malloc(sizeof(Usuario)*(numUsuarios+1)); // Reservo memoria para un usuario mas
-    *usuarios = copia;
-    (*usuarios)[numUsuarios] = u;
-
-    // Libero memoria del array de copia
-    free(copia);
-    copia = NULL;
+    registrarAdmin(strUser, strPass, usuarios, numUsuarios);
 }
 
 char menuPrincipalAdmin()
@@ -123,14 +110,14 @@ char gestionUsuarios()
     return linea[0];
 }
 
-void modificarUsuario(Usuario **usuarios, int numUsuario)
+void menuModificarUsuario(Usuario **usuarios, int numUsuarios)
 {
     printf("\n\n=================\n");
     printf("MODIFICAR USUARIO\n");
     printf("=================\n");
 
     // Mostrar por pantalla los usuarios que no sean admins
-    for(int i = 0; i < numUsuario; i++)
+    for(int i = 0; i < numUsuarios; i++)
     {
         if(!(*usuarios)[i].admin)
         {
@@ -142,33 +129,36 @@ void modificarUsuario(Usuario **usuarios, int numUsuario)
     printf("\nElija el usuario que quiera modificar: ");
     fflush(stdout);
     int index;
-    char linea[MAX_LINE];
-    fgets(linea, MAX_LINE, stdin);
-    sscanf(linea, "%i", &index);
-    clearIfNeeded(linea, MAX_LINE);
+    char strIndex[MAX_LINE];
+    fgets(strIndex, MAX_LINE, stdin);
+    sscanf(strIndex, "%i", &index);
+    clearIfNeeded(strIndex, MAX_LINE);
 
     // Modificar usuario
     printf("\n\n===================\n");
     printf("MODIFICAR %s\n", (*usuarios)[index].username);
     printf("===================\n");
     printf("Nombre de usuario nuevo: ");
-    fgets(linea, MAX_LINE, stdin);
-    sscanf(linea, "%i", &index);
-    clearIfNeeded(linea, MAX_LINE);
-    (*usuarios)[index].username = linea;
-    printf("Nombre de usuario nuevo: ");
-    fgets(linea, MAX_LINE, stdin);
-    sscanf(linea, "%i", &index);
-    clearIfNeeded(linea, MAX_LINE);
-    (*usuarios)[index].contrasena = linea;
+    char strUser[MAX_LINE];
+    fflush(stdout);
+    fgets(strUser, MAX_LINE, stdin);
+    clearIfNeeded(strUser, MAX_LINE);
+
+    printf("Contrasena de usuario nuevo: ");
+    char strPass[MAX_LINE];
+    fflush(stdout);
+    fgets(strPass, MAX_LINE, stdin);
+    clearIfNeeded(strPass, MAX_LINE);
     
+    modificarUsuario(strUser, strPass, usuarios, index);
+
     printf("Cambios realizados con exito!\n");
 }
 
-void eliminarUsuario(Usuario** usuarios, int numUsuario)
+void menuEliminarUsuario(Usuario** usuarios, int numUsuarios)
 {
     // Mostrar solamente los admins
-    for(int i = 0; i < numUsuario; i++)
+    for(int i = 0; i < numUsuarios; i++)
     {
         if(!(*usuarios)[i].admin)
         {
@@ -182,30 +172,18 @@ void eliminarUsuario(Usuario** usuarios, int numUsuario)
     int index;
     char linea[MAX_LINE];
     fgets(linea, MAX_LINE, stdin);
-    sscanf(linea, "%i", &index);
+    sscanf(linea[0], "%i", &index);
     clearIfNeeded(linea, MAX_LINE);
 
     // Confirmacion
-    printf("Va a eliminar a %s ¿Esta seguro? (S/N)", (*usuarios)[index].username);
+    printf("Va a eliminar a %s Â¿Esta seguro? (S/N)", (*usuarios)[index].username);
     fflush(stdout);
     fgets(linea, MAX_LINE, stdin);
     if(linea[0] == 'S')
     {
-        Usuario* copia;
-        copia = (Usuario*)malloc(sizeof(Usuario)*(numUsuario));
-        copia = *usuarios; 
-        *usuarios = (Usuario*)malloc(sizeof(Usuario)*(numUsuario-1));
-        for(int i = 0; i < numUsuario; i++)
-        {
-            if(i != index)
-            {
-                *usuarios[i] = copia[i];
-            }
-        }
+        eliminarUsuario(usuarios, index, numUsuarios);
+    }else{
 
-        // Liberar memoria
-        free(copia);
-        copia = NULL;
     }
 
 }
@@ -248,10 +226,10 @@ int main(void)
                 switch (opcion3)
                 {
                 case '1':
-                    modificarUsuario(&usuarios, numUsuarios);
+                    menuModificarUsuario(&usuarios, numUsuarios);
                     break;
                 case '2':
-                    eliminarUsuario(&usuarios, numUsuarios);
+                    menuEliminarUsuario(&usuarios, numUsuarios);
                     numUsuarios--;
                     break;
 
@@ -274,7 +252,7 @@ int main(void)
         }
         else if(login == 0)
         {
-            printf("Contraseña incorrecta\n");
+            printf("ContraseÃ±a incorrecta\n");
         } else
         {
             printf("Usuario no existe\n");

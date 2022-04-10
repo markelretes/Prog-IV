@@ -33,44 +33,42 @@ void registrarAdmin(char* username, char *contrasena, Usuario **usuarios, int nu
 	(*usuarios)[numUsuarios] = u;
 
 	 // Libero memoria del array de copia
-	 free(copia);
-	 copia = NULL;
+	free(copia);
+	copia = NULL;
 }
 void modificarUsuario(char* username, char *contrasena, Usuario **usuarios, int index){
-	 (*usuarios)[index].username = username;
-	 (*usuarios)[index].contrasena = contrasena;
+	(*usuarios)[index].username = username;
+	(*usuarios)[index].contrasena = contrasena;
 }
 void eliminarUsuario(Usuario **usuarios, int index, int numUsuarios){
-        Usuario* copia;
-        copia = (Usuario*)malloc(sizeof(Usuario)*(numUsuarios));
-        copia = *usuarios; 
-        *usuarios = (Usuario*)malloc(sizeof(Usuario)*(numUsuarios-1));
-        int j = 0;
-        for(int i = 0; i < numUsuarios; i++)
+    Usuario* copia;
+    copia = (Usuario*)malloc(sizeof(Usuario)*(numUsuarios));
+    copia = *usuarios;
+    *usuarios = (Usuario*)malloc(sizeof(Usuario)*(numUsuarios-1));
+    int j = 0;
+    for(int i = 0; i < numUsuarios; i++)
+    {
+        if(i != index)
         {
-            if(i != index)
-            {
-                *usuarios[j] = copia[i];
-                imprimirUsuario(*usuarios[i]);
-                j++;
-            }
+            (*usuarios)[j] = copia[i];
+            j++;
+            
         }
-        imprimirUsuarios(*usuarios, numUsuarios);
-
-        // Liberar memoria
-        free(copia);
-        copia = NULL;
+    }
+    numUsuarios--;
+    // Liberar memoria
+    free(copia);
+    copia = NULL;
 }
 void imprimirUsuario(Usuario usuario){
-    if(usuario.admin == true){
-        printf("%s Admin: TRUE", usuario.username);
-    } else{
-        printf("%s Admin: FALSE", usuario.username);
-    }
+    if(usuario.admin == false){
+        printf("%s || %s || %i || %i || %.2f \n", usuario.username, usuario.contrasena, usuario.partidas, usuario.wins, usuario.dineroMax);
+        } 
 }
 void imprimirUsuarios(Usuario *usuarios, int numUsuarios){
     for(int i = 0; i<numUsuarios; i++){
         imprimirUsuario(usuarios[i]);
+        
     }
 }
 

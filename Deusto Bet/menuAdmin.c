@@ -5,6 +5,7 @@
 #define INT_LINE 1
 #include "usuario.h"
 #include "menuAdmin.h"
+#include "sqlite3.h"
 
 void clearIfNeeded(char *str, int max_line)
 {

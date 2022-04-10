@@ -4,9 +4,20 @@
 #define MAX_LINE 10
 #include "usuario.h"
 #include "menuAdmin.h"
+#include "baseDeDatos.h"
 
 int main(void)
 {
+    sqlite3 *db;
+
+    int result = sqlite3_open("DeustoBet.db", &db);
+    if (result != SQLITE_OK) {
+		printf("Error al establecer conexion con la base de datos\n");
+		return result;
+	}
+
+	printf("Conexion establecida con la base de datos\n") ;
+
     //cargarDatos();
 
     // Datos de prueba
@@ -21,6 +32,15 @@ int main(void)
     
     //  Muestra menu principal
     mainAdmin(usuarios, numUsuarios);
+
+    result = sqlite3_close(db);
+	if (result != SQLITE_OK) {
+		printf("Error al cerrar conexion con la base de datos\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+	printf("\nConexion cerrada con la base de datos\n");
 
     //  Switch de opcion
     return 0;

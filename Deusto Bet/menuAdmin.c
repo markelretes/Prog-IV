@@ -7,11 +7,15 @@
 #include "menuAdmin.h"
 #include "sqlite3.h"
 
-void clearIfNeeded(char *str, int max_line)
+void limpiarString(char* str)
 {
-    // Limpia los caracteres de más introducidos
-	if ((strlen(str) == max_line-1) && (str[max_line-2] != '\n'))
-		while (getchar() != '\n');
+    for(int i = 0; i < strlen(str); i++)
+    {
+        if(str[i] == '\n')
+        {
+            str[i] = '\0';
+        }
+    }
 }
 
 char menuInicioAdmin()
@@ -24,7 +28,6 @@ char menuInicioAdmin()
     fflush(stdout);
     char linea[MAX_LINE];
     fgets(linea, MAX_LINE, stdin);
-    clearIfNeeded(linea, MAX_LINE);
 
     return linea[0]; // Solo interesa un digito
 }
@@ -40,12 +43,12 @@ int menuIniciarSesion(Usuario* usuarios, int numUsuarios)
     // Pide el username
     fflush(stdout);
     fgets(strUser, MAX_LINE, stdin);
-    clearIfNeeded(strUser, MAX_LINE);
+    limpiarString(strUser);
     // Pide la contrasena
     printf("Contrasena: ");
     fflush(stdout);
     fgets(strPass, MAX_LINE, stdin);
-    clearIfNeeded(strPass, MAX_LINE);
+    limpiarString(strPass);
     // Comparar username y contrasena
     for(int i = 0; i < numUsuarios; i++)
     {
@@ -71,15 +74,17 @@ void registroAdmin(Usuario** usuarios, int numUsuarios, sqlite3 *db)
     printf("Nombre de usuario: ");
     // Pide el username
     fflush(stdout);
+    fflush(stdin);
     fgets(strUser, MAX_LINE, stdin);
-    clearIfNeeded(strUser, MAX_LINE);
+    limpiarString(strUser);
     // Pide la contrasena
     printf("Contrasena: ");
     fflush(stdout);
+    fflush(stdin);
     fgets(strPass, MAX_LINE, stdin);
-    clearIfNeeded(strPass, MAX_LINE);
+    limpiarString(strPass);
 
-    Usuario u = {strUser, strPass, 0.0, 0, 0, false};
+    Usuario u = {strUser, strPass, 0.0, 0, 0, true};
     registrarAdmin(u, usuarios, numUsuarios);
     guardarUsuario(db, u); // Inserta en BD
 }
@@ -94,7 +99,6 @@ char menuPrincipalAdmin()
     fflush(stdout);
     char linea[MAX_LINE];
     fgets(linea, MAX_LINE, stdin);
-    clearIfNeeded(linea, MAX_LINE);
 
     return linea[0]; // Solo interesa un digito
 }
@@ -109,7 +113,6 @@ char gestionUsuarios()
     fflush(stdout);
     char linea[MAX_LINE];
     fgets(linea, MAX_LINE, stdin);
-    clearIfNeeded(linea, MAX_LINE);
 
     return linea[0];
 }
@@ -136,7 +139,6 @@ void menuModificarUsuario(Usuario **usuarios, int numUsuarios)
     char strIndex[MAX_LINE];
     fgets(strIndex, MAX_LINE, stdin);
     sscanf(strIndex, "%i", &index);
-    clearIfNeeded(strIndex, MAX_LINE);
 
     // Modificar usuario
     printf("\n\n===================\n");
@@ -146,14 +148,14 @@ void menuModificarUsuario(Usuario **usuarios, int numUsuarios)
     char strUser[MAX_LINE];
     fflush(stdout);
     fgets(strUser, MAX_LINE, stdin);
-    clearIfNeeded(strUser, MAX_LINE);
+    limpiarString(strUser);
 
     printf("Contrasena de usuario nuevo: ");
     char strPass[MAX_LINE];
     fflush(stdout);
     fgets(strPass, MAX_LINE, stdin);
-    clearIfNeeded(strPass, MAX_LINE);
-    
+    limpiarString(strPass);
+
     modificarUsuario(strUser, strPass, usuarios, index);
 
     printf("Cambios realizados con exito!\n");
@@ -180,7 +182,6 @@ void menuEliminarUsuario(Usuario** usuarios, int numUsuarios, sqlite3 *db)
     char linea[MAX_LINE];
     fgets(linea, MAX_LINE, stdin);
     sscanf(linea, "%i", &index);
-    clearIfNeeded(linea, MAX_LINE);
 
     // Confirmacion
     printf("Se va a eliminar a %s ¿Esta seguro? (S/N)", (*usuarios)[index].username);
@@ -246,8 +247,8 @@ void mainAdmin(Usuario *usuarios, int numUsuarios, sqlite3 *db){
     {
     case '1':
     // TODO: anyadir do-while
-        //login = menuIniciarSesion(usuarios, numUsuarios);
-        login = 1;
+        login = menuIniciarSesion(usuarios, numUsuarios);
+        // login = 1;
         if(login == 1)
         {
             //MENU PRINCIPAL
@@ -295,7 +296,7 @@ void mainAdmin(Usuario *usuarios, int numUsuarios, sqlite3 *db){
     case '2':
         numUsuarios++;
         Usuario u;
-        registroAdmin(usuarios, numUsuarios, db);
+        registroAdmin(&usuarios, numUsuarios, db);
         
     default:
         break;

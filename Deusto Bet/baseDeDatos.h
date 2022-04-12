@@ -13,4 +13,6 @@ int guardarUsuario(sqlite3 *db, Usuario u);
 
 int eliminarUsuarioBD(sqlite3 *db, Usuario u);
 
+int modificarUsuarioBD(sqlite3 *db, Usuario u, char* username, char* contrasena);
+
 #endif

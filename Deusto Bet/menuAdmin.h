@@ -17,7 +17,7 @@ char menuPrincipalAdmin();
 
 char gestionUsuarios();
 
-void menuModificarUsuario(Usuario **usuarios, int numUsuarios);
+void menuModificarUsuario(Usuario **usuarios, int numUsuarios, sqlite3 *db);
 
 void menuEliminarUsuario(Usuario** usuarios, int numUsuarios, sqlite3 *db);
 

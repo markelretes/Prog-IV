@@ -173,3 +173,21 @@ int eliminarUsuarioBD(sqlite3 *db, Usuario u)
 
     return SQLITE_OK;
 }
+
+int modificarUsuarioBD(sqlite3 *db, Usuario u, char* username, char* contrasena)
+{
+    sqlite3_stmt *stmt;
+    char* sql = sqlite3_mprintf("update Usuario set username = '%q', contrasena = '%q' where username = '%q';", username, contrasena, u.username);
+    int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+
+    sqlite3_step(stmt);
+
+    result = sqlite3_finalize(stmt);
+	if (result != SQLITE_OK) {
+		printf("Error finalizing statement (UPDATE)\n");
+		printf("%s\n", sqlite3_errmsg(db));
+		return result;
+	}
+
+    return result;
+}

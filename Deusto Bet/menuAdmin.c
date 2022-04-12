@@ -117,7 +117,7 @@ char gestionUsuarios()
     return linea[0];
 }
 
-void menuModificarUsuario(Usuario **usuarios, int numUsuarios)
+void menuModificarUsuario(Usuario **usuarios, int numUsuarios, sqlite3 *db)
 {
     printf("\n\n=================\n");
     printf("MODIFICAR USUARIO\n");
@@ -156,6 +156,7 @@ void menuModificarUsuario(Usuario **usuarios, int numUsuarios)
     fgets(strPass, MAX_LINE, stdin);
     limpiarString(strPass);
 
+    modificarUsuarioBD(db, (*usuarios)[index], strUser, strPass);
     modificarUsuario(strUser, strPass, usuarios, index);
 
     printf("Cambios realizados con exito!\n");
@@ -260,7 +261,7 @@ void mainAdmin(Usuario *usuarios, int numUsuarios, sqlite3 *db){
                 switch (opcion3)
                 {
                 case '1':
-                    menuModificarUsuario(&usuarios, numUsuarios);
+                    menuModificarUsuario(&usuarios, numUsuarios, db);
                     break;
                 case '2':
                     menuEliminarUsuario(&usuarios, numUsuarios, db);

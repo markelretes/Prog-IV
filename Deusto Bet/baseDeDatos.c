@@ -4,31 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-//	FUNCIONES DE ABRIR Y CERRAR CONEXION EN EL MAIN
-
-// int abrirConexion(sqlite3 *db, char* nombre){
-//     int result = sqlite3_open(nombre, &db);
-//     if (result != SQLITE_OK) {
-// 		printf("Error al establecer conexion con la base de datos\n");
-// 		return result;
-// 	}
-
-// 	printf("Conexion establecida con la base de datos\n") ;
-// 	return result;
-// }
-
-// int cerrarConexion(sqlite3 *db){
-//     int result = sqlite3_close(db);
-// 	if (result != SQLITE_OK) {
-// 		printf("Error al cerrar conexion con la base de datos\n");
-// 		printf("%s\n", sqlite3_errmsg(db));
-// 		return result;
-// 	}
-
-// 	printf("Conexion cerrada con la base de datos\n") ;
-// 	return result;
-// }
-
 int cargarUsuarios(sqlite3 *db, Usuario **usuarios, int* numUsuarios){
 
     sqlite3_stmt *stmt;
@@ -119,8 +94,6 @@ int cargarUsuarios(sqlite3 *db, Usuario **usuarios, int* numUsuarios){
 		return result;
 	}
 
-	printf("Usuarios importados correctamente\n\n");
-
 	return SQLITE_OK;
 }
 
@@ -149,7 +122,7 @@ int guardarUsuario(sqlite3 *db, Usuario u)
     return SQLITE_OK;
 }
 
-int eliminarUsuarioBD(sqlite3 *db, Usuario u)
+int eliminarUsuario(sqlite3 *db, Usuario u)
 {
     sqlite3_stmt *stmt;
 
@@ -174,7 +147,7 @@ int eliminarUsuarioBD(sqlite3 *db, Usuario u)
     return SQLITE_OK;
 }
 
-int modificarUsuarioBD(sqlite3 *db, Usuario u, char* username, char* contrasena)
+int modificarUsuario(sqlite3 *db, Usuario u, char* username, char* contrasena)
 {
     sqlite3_stmt *stmt;
     char* sql = sqlite3_mprintf("update Usuario set username = '%q', contrasena = '%q' where username = '%q';", username, contrasena, u.username);

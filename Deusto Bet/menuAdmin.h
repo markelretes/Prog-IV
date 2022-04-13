@@ -7,15 +7,15 @@
 
 void clearIfNeeded(char *str, int max_line);
 
-char menuInicioAdmin();
+int menuInicioAdmin();
 
 int menuIniciarSesion(Usuario* usuarios, int numUsuarios);
 
-void registroAdmin(Usuario** usuarios, int numUsuarios, sqlite3 *db);
+int menuRegistroAdmin(Usuario* usuarios, int numUsuarios, sqlite3 *db);
 
-char menuPrincipalAdmin();
+int menuPrincipalAdmin();
 
-char gestionUsuarios();
+int menuGestionUsuarios();
 
 void menuModificarUsuario(Usuario **usuarios, int numUsuarios, sqlite3 *db);
 

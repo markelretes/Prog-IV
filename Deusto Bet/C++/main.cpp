@@ -12,6 +12,22 @@ using namespace std;
 
 int main(void)
 {
+    Usuario* usuarios;
+    usuarios = new Usuario[4];
+    Usuario u1 = Usuario("markel", "markel");
+    Usuario u2 = Usuario("andoni", "andoni");
+    Usuario u3 = Usuario("diego", "diego");
+    Usuario u4 = Usuario("juan", "juan");
+
+    u1.setDineroMax(100.1);
+    u2.setDineroMax(200.1);
+    u3.setDineroMax(123.1);
+    u4.setDineroMax(9.1);
+
+    usuarios[1] = u1;
+    usuarios[2] = u2;
+    usuarios[3] = u3;
+    usuarios[4] = u4;
     //  TEST INICIO SESION
     // Usuario u1 = Usuario("juorma", "juan1234");
     // Usuario* usuarios;
@@ -30,7 +46,7 @@ int main(void)
 
 
     //  TEST REGISTRO USUARIO
-    // Usuario u1 = Usuario("markel", "markel");
+        
     // Usuario* usuarios;
     // usuarios = new Usuario[1];
     // usuarios[0] = u1;
@@ -43,8 +59,12 @@ int main(void)
     // }
 
     //  TEST MENU PRINCIPAL
-    Usuario u1 = Usuario("juorma", "juan1234");
-    menuPrincipal(u1);
-
+    // int opcion = menuPrincipal(u1);
+    // if(opcion == 2){
+    //     menuEstadisticas(u1);
+    // }
+    // if(opcion == 3){
+    //     menuClasificacionJugadores(4, usuarios);
+    // }
     return 0;
 }

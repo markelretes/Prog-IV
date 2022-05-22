@@ -9,9 +9,17 @@
         Equipo::ultimoCodEquipo++;
         this->nombre = new char[1];
     }
+    
     Equipo::Equipo(char* nombre)
     {
         this->codEquipo = ultimoCodEquipo;
+        Equipo::ultimoCodEquipo++;
+        this->nombre = new char[strlen(nombre)+1];
+        strcpy(this->nombre, nombre);
+    }
+    Equipo::Equipo(char* nombre, int codEquipo)
+    {
+        this->codEquipo = codEquipo;
         Equipo::ultimoCodEquipo++;
         this->nombre = new char[strlen(nombre)+1];
         strcpy(this->nombre, nombre);

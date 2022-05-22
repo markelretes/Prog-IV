@@ -24,10 +24,43 @@ int main(void)
     u3.setDineroMax(123.1);
     u4.setDineroMax(9.1);
 
-    usuarios[1] = u1;
-    usuarios[2] = u2;
-    usuarios[3] = u3;
-    usuarios[4] = u4;
+    usuarios[0] = u1;
+    usuarios[1] = u2;
+    usuarios[2] = u3;
+    usuarios[3] = u4;
+
+    Partido* partidos;
+    Equipo* equipos;
+    float* prob;
+    prob = new float[2];
+
+    prob[0] = 0.8;
+    prob[1] = 0.7;
+    
+    equipos = new Equipo[2];
+    partidos = new Partido[15];
+    
+
+    Equipo rs = Equipo("Real Sociedad",0);
+    Equipo at = Equipo("Athletic",1);
+
+    equipos[0] = rs;
+    equipos[1] = at;
+
+
+    cout<<rs.getCodEquipo()<<endl;
+    cout<<at.getCodEquipo()<<endl;
+
+    for(int i = 0; i<3; i++){
+        Partido p = Partido(i, rs, at);
+        partidos[i] = p;
+        
+    }
+
+
+    menuPartida(u1, partidos, equipos, prob);
+    
+    
     //  TEST INICIO SESION
     // Usuario u1 = Usuario("juorma", "juan1234");
     // Usuario* usuarios;

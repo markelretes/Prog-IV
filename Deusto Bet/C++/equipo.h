@@ -11,6 +11,7 @@ class Equipo
     public:
         Equipo();
         Equipo(char* nombre);
+        Equipo(char* nombre, int codEquipo); //Prueba
         Equipo(const Equipo& e);
 
         int getCodEquipo();

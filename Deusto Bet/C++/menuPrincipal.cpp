@@ -71,12 +71,31 @@ int menuClasificacionJugadores(int numUsuarios, Usuario usuarios[])
     //cin >> endl;
     return 0;
 }
-int menuPartida(Usuario u, Partido partidos[]){
-    float dinero = 100.0;
-    for(int i = 0; i < 9; i++){
-        cout<<"Jornada"<<i<<endl;
-        for(int e = 0; e < 5; e++){
+int menuPartida(Usuario u, Partido partidos[], Equipo equipos[], float prob[])
+    {
+    float bets = 100.0;
+    for(int i = 0; i < 3; i++){
+        cout<<"Jornada "<< i + 1 <<endl;
+        cout<<"========="<<endl;
+        cout<<"*************************"<<endl;
+        cout<<"**                     **"<<endl;
+        cout<<"** Bets restantes:"<<bets<<"  **"<<endl;
+        cout<<"**                     **"<<endl;
+        cout<<"*************************"<<endl;
+       
+        for(int e = 0; e < 1; e++){
+            float apuesta;
+            char opcionApuesta;
+            float cuotaLoc = 1/((prob[partidos[i*1 + e].getLocal().getCodEquipo()])/(prob[partidos[i*1 + e].getLocal().getCodEquipo()] + prob[partidos[i*1 + e].getVisitante().getCodEquipo()])); 
+            float cuotaVis = 1/((prob[partidos[i*1 + e].getVisitante().getCodEquipo()])/(prob[partidos[i*1 + e].getLocal().getCodEquipo()] + prob[partidos[i*1 + e].getVisitante().getCodEquipo()])); 
             
+            cout<<partidos[i*1 + e].getLocal().getNombre()<<" (Cuota "<< cuotaLoc <<" ) " << " - " << partidos[i*1 + e].getVisitante().getNombre() <<" (Cuota "<< cuotaVis <<" ) "<<endl;
+            cout<<"Cantidad a apostar: ";
+            cin>>apuesta;
+            cout<<"Introduzca el resultado del partido (L gana local, V gana visitante):";
+            cin>>opcionApuesta;
+
         }
     }
+    return 0;
 }

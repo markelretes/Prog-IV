@@ -12,13 +12,12 @@ class Apuesta
         float importe;
         bool ganaLocal;
         bool ganaVisitante;
-        bool empate;
         Partida partida;
         Partido partido;
 
     public:
         Apuesta();
-        Apuesta(float importe, bool ganaLocal, bool ganaVisitante, bool empate);
+        Apuesta(float importe, bool ganaLocal, bool ganaVisitante, Partida partida, Partido partido);
         Apuesta(const Apuesta& a);
 
         int getCodApuesta();
@@ -29,8 +28,6 @@ class Apuesta
         void setGanaLocal(bool ganaLocal);
         bool isGanaVisitante();
         void setGanaVisitante(bool ganaVisitante);
-        bool isEmpate();
-        void setEmpate(bool empate);
         Partida getPartida();
         void setPartida(Partida p);
         Partido getPartido();

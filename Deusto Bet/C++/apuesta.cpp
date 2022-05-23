@@ -12,18 +12,16 @@
         this->importe = 0.0;
         this->ganaLocal = false;
         this->ganaVisitante = false;
-        this->empate = false;
         this->partida = Partida();
         this->partido = Partido();
     }
-    Apuesta::Apuesta(float importe, bool ganaLocal, bool ganaVisitante, bool empate)
+    Apuesta::Apuesta(float importe, bool ganaLocal, bool ganaVisitante, Partida partida, Partido partido)
     {
         this->codApuesta = ultimoCodApuesta;
         Apuesta::ultimoCodApuesta++;
         this->importe = importe;
         this->ganaLocal = ganaLocal;
         this->ganaVisitante = ganaVisitante;
-        this->empate = empate;
         this->partida = partida;
         this->partido = partido;
     }
@@ -33,7 +31,6 @@
         this->importe = a.importe;
         this->ganaLocal = a.ganaLocal;
         this->ganaVisitante = a.ganaVisitante;
-        this->empate = a.empate;
         this->partida = a.partida;
         this->partido = a.partido;
     }
@@ -69,14 +66,6 @@
     void Apuesta::setGanaVisitante(bool ganaVisitante)
     {
         this->ganaVisitante = ganaVisitante;
-    }
-    bool Apuesta::isEmpate()
-    {
-        return this->empate;
-    }
-    void Apuesta::setEmpate(bool empate)
-    {
-        this->empate = empate;
     }
     Partida Apuesta::getPartida()
     {

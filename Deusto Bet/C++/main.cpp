@@ -47,10 +47,6 @@ int main(void)
     equipos[0] = rs;
     equipos[1] = at;
 
-
-    cout<<rs.getCodEquipo()<<endl;
-    cout<<at.getCodEquipo()<<endl;
-
     for(int i = 0; i<3; i++){
         Partido p = Partido(i, rs, at);
         partidos[i] = p;

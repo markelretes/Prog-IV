@@ -1,0 +1,3 @@
+gcc server.c ..\Admin\sqlite3.c ..\Admin\baseDeDatos.c ..\Admin\fichero.c -o server.exe -lws2_32
+
+g++ client.cpp equipo.cpp usuario.cpp apuesta.cpp partida.cpp partido.cpp menuInicio.cpp menuPrincipal.cpp -o client.exe -lws2_32
